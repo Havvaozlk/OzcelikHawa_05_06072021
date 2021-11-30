@@ -45,7 +45,7 @@ const getProducts = async function() {
             
     
             for (let product in products) {
-                    const productsSection = document.getElementById('items');
+                    /*const productsSection = document.getElementById('items');*/
 
                     //Insertion du lien
                     let productLink = document.createElement("a");
@@ -80,7 +80,7 @@ const getProducts = async function() {
                 console.error('Retour du serveur : ', response.status);
                 alert('Erreur rencontrée : ' + response.status);
                     } 
-                } catch (error) {
+    } catch (error) {
     alert("Erreur : " + error);
 }
 }
