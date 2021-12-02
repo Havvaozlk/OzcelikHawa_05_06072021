@@ -34,7 +34,7 @@ const getProducts = async function() {
 
             //Insérer le prix
             let productPrice = document.querySelector('#price');
-            productPrice.innerHTML: product.price;
+            productPrice.innerHTML= product.price;
 
             console.log(productPrice);
 
@@ -47,6 +47,46 @@ const getProducts = async function() {
                 colorsProduct.appendChild(color);
             }
 
+
+            //bouton panier
+            
+            let addToCart = document.querySelector('#addToCart');
+            let productQuantity = document.querySelector('#quantity');
+            addToCart.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                let productAdded = {
+                    productName : product.name,
+                    id : product._id,
+                    colorsProduct : colorsProduct.value,
+                    productQuantity : productQuantity.value,
+                    productPrice : product.price,
+                };
+                console.log(productAdded);
+
+                let storedProduct = JSON.parse(localStorage.getItem('newArticle'));
+                const color = colorsProduct.value;
+                if(storedProduct) {
+                    storedProduct.push(productAdded);
+                    localStorage.setItem('newArticle', JSON.stringify(storedProduct));
+                    console.log(storedProduct);
+                    if (window.confirm(product.name + ' ' + colorsProduct + ' a bien été ajouté. Souhaitez vous consulter votre panier ?')) {window.location.href = 'panier.html';
+                } else {
+                    window.location.href = 'index.html';
+                }
+
+                } else {
+                    storedProduct = [];
+                    storedProduct.push(productAdded);
+                    localStorage.setItem('newArticle', JSON.stringify(storedProduct));
+                    console.log(storedProduct);
+                    if (window.confirm(product.name + ' ' + colorsProduct + ' a bien été ajouté. Souhaitez vous consulter votre panier ?')) {
+                        window.location.href = "panier.html";
+                    } else {
+                        window.location.href = "index.html";
+                    }
+                }
+            });
         } else {
         console.error('Retour du serveur : ', response.status);
         alert('Erreur rencontrée : ' + response.status);
@@ -57,6 +97,8 @@ const getProducts = async function() {
 };
 
 getProducts();
+//productAdded();
+
 
 /*function addToCart() {
     let addToCartBtn = document.querySelector('#addToCart');
@@ -64,6 +106,7 @@ getProducts();
     
     addToCartBtn.addEventListener('click', () =>
     if(quantity.value > 0 && quantity.value < 100) {
+
 
       
       };
