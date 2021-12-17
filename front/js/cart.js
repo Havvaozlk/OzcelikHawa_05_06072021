@@ -1,24 +1,15 @@
 // récuperer les données du localStorage
-/*let storedProduct = JSON.parse(localStorage.getItem('newArticle'));
-console.log(storedProduct);*/
 
 let products = [];
 let storedProduct = JSON.parse(localStorage.getItem('product'));
 console.table(storedProduct);
-//const positionEmptyCart = document.querySelector('#cart__items');
 let itemCart = document.getElementById('cart__items');
 let itemCards = [];
-//let product = storedProduct[product(0)];
-//console.log(product);
 
-//function getCart() {
 if(storedProduct === null || storedProduct == 0) {
-    //let emptyCart = `<p>Votre panier est vide </p>`;
-    //itemCart.innerHTML = `<p>Votre panier est vide </p>`;
+    let emptyCart = `<p>Votre panier est vide </p>`;
+    itemCart.innerHTML = `<p>Votre panier est vide </p>`;
 } else {
-    // itemCards = [];
-
-
     for (i = 0; i < storedProduct.length; i++) {
         products.push(storedProduct[i].id);
 
@@ -47,7 +38,6 @@ if(storedProduct === null || storedProduct == 0) {
         `;
     }
     if (i === storedProduct.length) {
-        //const itemCart = document.getElementById('cart__items');
        itemCart.innerHTML += itemCards;
     }
     
@@ -93,15 +83,9 @@ function modifyQty() {
 
             let modifyQuantity = storedProduct[k].productQuantity;
             let quantityModifValue = modifQty[k].valueAsNumber;
-
-            let result = storedProduct.find((el) => el.quantityModifValue !== modifyQuantity);
-
-            result.productQuantity = quantityModifValue;
-            storedProduct[k].productQuantity = result.productQuantity;
-
+            storedProduct[k].productQuantity = quantityModifValue;
             localStorage.setItem('product', JSON.stringify(storedProduct));
-
-            location.reload();
+            getTotals();
         })
     }
 }
@@ -110,6 +94,7 @@ modifyQty();
 
 // fonction pour supprimer un produit
 function deleteProduct() {
+  console.log('test');
 let btnSupprimer = document.querySelectorAll('.deleteItem');
 console.log(btnSupprimer);
 
@@ -136,8 +121,9 @@ for (let l = 0; l < btnSupprimer.length; l++){
     })
 }
 
-deleteProduct();
+
 }
+deleteProduct();
 //---------------------------------------------------------------------
 //j'envoie le formulaire dans le serveur
 function postForm() {
@@ -163,7 +149,7 @@ function postForm() {
 
             } else {
                 let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
-                firstNameErrorMsg.innerHTML = "Merci de vérifier le prénom, 3 caractères minimum";
+                firstNameErrorMsg.innerHTML = "Veuillez renseigner ce champs";
             }
         }
 
@@ -174,18 +160,18 @@ function postForm() {
               return true;
             } else {
               let lastNameErrorMsg = document.getElementById('lastNameErrorMsg');
-              lastNameErrorMsg.innerHTML = "Merci de vérifier le nom, 3 caractères minimum, avec des lettres uniquement";
+              lastNameErrorMsg.innerHTML = "Veuillez renseigner ce champs";
             }
           }
 
           //controle adresse
           function controlAddress() {
             const validAddress = contact.address;
-             if (/^[^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{3,20}$/.test(validAddress)) {
+             if (/^(([a-zA-ZÀ-ÿ0-9]+[\s\-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,10}$/.test(validAddress)) {
               return true;
             } else {
               let addressErrorMsg = document.getElementById('addressErrorMsg');
-              addressErrorMsg.innerHTML = "Merci de vérifier l'adresse, alphanumérique et sans caractères spéciaux";
+              addressErrorMsg.innerHTML = "Veuillez renseigner ce champs";
             }
           } 
 
@@ -196,7 +182,7 @@ function postForm() {
       return true;
     } else {
       let cityErrorMsg = document.getElementById('cityErrorMsg');
-      cityErrorMsg.innerHTML = "Merci de vérifier le nom de la ville, 3 caractères minimum, avec des lettres uniquement";
+      cityErrorMsg.innerHTML = "Veuillez renseigner ce champs";
     }
   } 
 // contrôle email
@@ -240,7 +226,7 @@ function controlEmail() {
     .then(data => {
       localStorage.setItem('orderId', data.orderId);
         if (validControl()) {
-          document.location.href = 'confirmation.html?id=' + data.orderId;
+          document.location.href = 'confirmation.html';
         }
     })
 
