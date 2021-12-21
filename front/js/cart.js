@@ -5,10 +5,13 @@ let storedProduct = JSON.parse(localStorage.getItem('product'));
 console.table(storedProduct);
 let itemCart = document.getElementById('cart__items');
 let itemCards = [];
+//let cartOrder = document.querySelector('.cart__order');
 
 if(storedProduct === null || storedProduct == 0) {
     let emptyCart = `<p>Votre panier est vide </p>`;
     itemCart.innerHTML = `<p>Votre panier est vide </p>`;
+    document.querySelector('.cart__order').style.display = 'none';
+
 } else {
     for (i = 0; i < storedProduct.length; i++) {
         products.push(storedProduct[i].id);
@@ -98,8 +101,12 @@ function deleteProduct() {
 let btnSupprimer = document.querySelectorAll('.deleteItem');
 console.log(btnSupprimer);
 
+
 for (let l = 0; l < btnSupprimer.length; l++){
+  
     btnSupprimer[l].addEventListener('click' , (event) => {
+     //  alert('Voulez-vous supprimer ce produit ?')
+    if(confirm('Voulez-vous supprimer ce produit ?')) {
         event.preventDefault();
         console.log(event);
 
@@ -111,15 +118,19 @@ for (let l = 0; l < btnSupprimer.length; l++){
         storedProduct = storedProduct.filter( el => el.id !== idSelectionnerSuppression);
         console.log(storedProduct);
 
-        //on envoie la variable dans lo localStorage
+        //on envoie la variable dans le localStorage
         localStorage.setItem('product', JSON.stringify(storedProduct));
 
         //alerte pour avertir que le produit a été supprimé
         alert('Ce produit a bien été supprimé du panier');
         window.location.href = 'cart.html';
         
-    })
+    } else {
+
+     }
+  })
 }
+
 
 
 }
@@ -205,7 +216,7 @@ function controlEmail() {
           alert('Merci de revérifier les données du formulaire')
         }
     }
-    validControl();
+    
 
     //ajouter dans un objet
     let sendFormData = {

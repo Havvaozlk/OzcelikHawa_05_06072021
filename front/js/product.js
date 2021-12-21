@@ -100,7 +100,9 @@ const getProducts = async function() {
                     localStorage.setItem('product', JSON.stringify(storedProduct));
                     console.log(storedProduct);
                     popupConfirmation();
-                }}
+                }}else {
+                    alert('Veuillez préciser la couleur et la quantité du produit choisi');
+                }
                 
             });
         } else {
