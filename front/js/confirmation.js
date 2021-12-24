@@ -1,8 +1,9 @@
 function main() {
-    const orderId = document.getElementById('orderId');
-    orderId.innerHTML = localStorage.getItem('orderId');
-    console.log(localStorage.getItem("orderId"));
-    localStorage.clear();
-  }
+  const orderId = document.getElementById('orderId');
+  let params = (new URL(document.location)).searchParams;
+  let id = params.get('id');
+  orderId.innerHTML = id;
+  localStorage.clear();
+}
 
-  main ();
+main();
