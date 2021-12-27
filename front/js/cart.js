@@ -92,7 +92,7 @@ function modifyQty() {
 }
 modifyQty();
 
-
+console.log(storedProduct);
 // fonction pour supprimer un produit
 function deleteProduct() {
   let btnSupprimer = document.querySelectorAll('.deleteItem');
@@ -105,9 +105,11 @@ function deleteProduct() {
         event.preventDefault();
 
         let idSelectionnerSuppression = storedProduct[l].id;
+        let colorSelectionnerSuppression = storedProduct[l].colorsProduct;
+        let productInfo = idSelectionnerSuppression + colorSelectionnerSuppression;
 
         // methode filter pour selectionner les éléments à garder et supprimer le reste
-        storedProduct = storedProduct.filter(el => el.id !== idSelectionnerSuppression);
+        storedProduct = storedProduct.filter(el => el.id.concat('', el.colorsProduct) !== productInfo);
 
         //on envoie la variable dans le localStorage
         localStorage.setItem('product', JSON.stringify(storedProduct));
@@ -117,7 +119,7 @@ function deleteProduct() {
         window.location.href = 'cart.html';
 
       } else {
-
+        alert('Vous avez annuler la suppression du produit');
       }
     })
   }
@@ -150,11 +152,7 @@ function postForm() {
         let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg');
         firstNameErrorMsg.style.display = 'none';
         return true;
-
-
-
       } else {
-        //let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
         firstNameErrorMsg.innerHTML = "Veuillez renseigner ce champs";
       }
     }
@@ -209,13 +207,11 @@ function postForm() {
     //Envoie dans le localStorage
     function validControl() {
       if (controlFirstName() && controlName() && controlAddress() && controlCity() && controlEmail()) {
-        localStorage.setItem('contact', JSON.stringify(contact));
         return true;
       } else {
         alert('Merci de revérifier les données du formulaire')
       }
     }
-
 
     //ajouter dans un objet
     let sendFormData = {
@@ -231,16 +227,13 @@ function postForm() {
       }
     }
 
-
     fetch("http://localhost:3000/api/products/order", options)
       .then(response => response.json())
       .then(data => {
-        //localStorage.setItem('orderId', data.orderId);
         if (validControl()) {
           document.location.href = 'confirmation.html?id=' + data.orderId;
         }
       })
-
   })
 }
 postForm();

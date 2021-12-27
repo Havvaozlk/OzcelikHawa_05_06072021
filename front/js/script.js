@@ -29,6 +29,7 @@
 
 // getProducts();
 
+
 //Récupérer des données de l'API
 // j'utilise fetch pour récupérer les données
 fetch('http://localhost:3000/api/products')
