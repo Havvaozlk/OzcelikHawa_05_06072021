@@ -62,7 +62,7 @@ const getProducts = async function () {
 
                     // déclaration d'une variable dans laquelle on met les valeurs du local storage
                     let storedProduct = JSON.parse(localStorage.getItem('product'));
-                    const color = colorsProduct.value;
+                    // const color = colorsProduct.value;
 
                     //fenetre popup pour la redirection au panier
                     const popupConfirmation = () => {
@@ -77,7 +77,9 @@ const getProducts = async function () {
                     }
                     if (storedProduct) {
                         //Si le panier contient des articles
-                        let result = storedProduct.find((el) => el.id === product._id && el.colorsProduct === colorsProduct.value);
+                        const result = storedProduct.find(
+                            (el) => el.id === product._id && el.colorsProduct === colorsProduct.value);
+                            //si le produit est déjà dans le panier
                         if (result) {
                             let newQuantite = parseInt(productAdded.productQuantity) + parseInt(result.productQuantity);
                             result.productQuantity = newQuantite;
@@ -85,23 +87,27 @@ const getProducts = async function () {
                             console.table(storedProduct);
                             popupConfirmation();
                         }
+                        //s'il n'est pas dans le panier
                         else {
                             storedProduct.push(productAdded);
                             localStorage.setItem('product', JSON.stringify(storedProduct));
                             popupConfirmation();
 
                         }
+                        //si le panier est vide
                     } else {
                         storedProduct = [];
                         storedProduct.push(productAdded);
                         localStorage.setItem('product', JSON.stringify(storedProduct));
                         popupConfirmation();
                     }
+                    //si la quantité ou couleur n'a pas été précisée
                 } else {
                     alert('Veuillez préciser la couleur et la quantité du produit choisi');
                 }
 
             });
+            //si l'id n'existe pas
         } else {
             document.querySelector('.item__content').style.display = 'none';
             let indisponible = document.querySelector('.item__img');

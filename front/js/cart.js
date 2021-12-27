@@ -8,7 +8,6 @@ let products = [];
 //Si le local storage est null ou égale à 0
 if (storedProduct === null || storedProduct == 0) {
   //Le message 'votre panier est vide' apparait et le formulaire disparait
-  let emptyCart = `<p>Votre panier est vide </p>`;
   itemCart.innerHTML = `<p>Votre panier est vide </p>`;
   document.querySelector('.cart__order').style.display = 'none';
 
@@ -66,7 +65,7 @@ function getTotals() {
   //récupérer le prix total
   let totalPrice = 0;
 
-  for (var i = 0; i < length; ++i) {
+  for (var i = 0; i < qtyLength; ++i) {
     totalPrice += (productQty[i].valueAsNumber * storedProduct[i].productPrice);
   }
 
@@ -78,12 +77,12 @@ getTotals();
 //modification de la quantité
 function modifyQty() {
   let modifQty = document.querySelectorAll('.itemQuantity');
-
+// si k est inferieur a la quantité modifier
   for (let k = 0; k < modifQty.length; k++) {
     modifQty[k].addEventListener('change', (event) => {
       event.preventDefault();
 
-      let modifyQuantity = storedProduct[k].productQuantity;
+      // let modifyQuantity = storedProduct[k].productQuantity;
       let quantityModifValue = modifQty[k].valueAsNumber;
       storedProduct[k].productQuantity = quantityModifValue;
       localStorage.setItem('product', JSON.stringify(storedProduct));

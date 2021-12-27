@@ -2,6 +2,7 @@
 const getProducts = async function () {
     let items_selector = document.querySelector('.items');
     try {
+        //j'utilise fetch pour récupérer les données de l'API
         let response = await fetch('http://localhost:3000/api/products');
         //lorsque l'API est lancé les produits sont affichés
         if (response.ok) {
